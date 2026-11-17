@@ -89,10 +89,59 @@ public interface TimedTilesConfig extends Config
 	}
 
 	@ConfigItem(
+		keyName = "tileLabel",
+		name = "Tile label",
+		description = "What each marker's tile shows: its number, the seconds it has left, or nothing.",
+		position = 7
+	)
+	default TileLabel tileLabel()
+	{
+		return TileLabel.NUMBER;
+	}
+
+	@ConfigItem(
+		keyName = "timerDecimals",
+		name = "Timer decimals",
+		description = "Digits after the point when Tile label is Timer: 0 shows whole seconds, 1 tenths, 2 hundredths.",
+		position = 8
+	)
+	@Range(min = 0, max = 2)
+	default int timerDecimals()
+	{
+		return 0;
+	}
+
+	@ConfigItem(
+		keyName = "outlineWidth",
+		name = "Outline thickness",
+		description = "How thick each marker's tile outline is.",
+		position = 9
+	)
+	@Range(min = 1, max = 6)
+	@Units(Units.PIXELS)
+	default int outlineWidth()
+	{
+		return 2;
+	}
+
+	@ConfigItem(
+		keyName = "fadeSeconds",
+		name = "Fade length",
+		description = "How long a marker takes to fade out at the end of its time. 0 keeps it solid until it vanishes.",
+		position = 10
+	)
+	@Range(min = 0, max = 5)
+	@Units(Units.SECONDS)
+	default int fadeSeconds()
+	{
+		return 2;
+	}
+
+	@ConfigItem(
 		keyName = "largeNumbers",
 		name = "Large numbers",
-		description = "Draws the numbers bigger.",
-		position = 7
+		description = "Draws the numbers and the timer bigger.",
+		position = 11
 	)
 	default boolean largeNumbers()
 	{
@@ -103,7 +152,7 @@ public interface TimedTilesConfig extends Config
 		keyName = "share",
 		name = "Share with my party",
 		description = "Party members with 2h Timed Tiles see your markers. Paused in the Wilderness and on PvP worlds.",
-		position = 8
+		position = 12
 	)
 	default boolean share()
 	{
@@ -114,7 +163,7 @@ public interface TimedTilesConfig extends Config
 		keyName = "showParty",
 		name = "Show party markers",
 		description = "Shows markers from your party.",
-		position = 9
+		position = 13
 	)
 	default boolean showParty()
 	{
@@ -124,8 +173,8 @@ public interface TimedTilesConfig extends Config
 	@ConfigItem(
 		keyName = "showNames",
 		name = "Show names",
-		description = "Shows who placed each party marker.",
-		position = 10
+		description = "Shows who placed each party marker, after the number or timer. Nothing is shown when Tile label is Nothing.",
+		position = 14
 	)
 	default boolean showNames()
 	{

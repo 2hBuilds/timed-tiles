@@ -12,7 +12,8 @@
 ## What it does
 
 - **Numbered markers.** Hold your Ping key and left-click the ground. A marker goes on that tile, numbered 1, 2, 3 in the order you click, and your character does not walk.
-- **They disappear.** Each marker fades out after the time you set, 15 seconds by default.
+- **They disappear.** Each marker fades out after the time you set, 15 seconds by default. You choose how long the fade takes, and how thick the outline is.
+- **Number, timer or nothing.** Pick what each tile shows: its number, the seconds it has left (whole seconds, tenths or hundredths), or just the coloured tile.
 - **Remove one.** Click a marked tile again and just that marker goes. The others keep their numbers.
 - **Clear them all.** Hold the Ping key and right-click. A separate Clear key is optional.
 - **Party.** In a RuneLite party, party members who also have 2h Timed Tiles see your markers, each player in their own colour (the plugin steers clear of matching colours). Names are optional. Members without it see nothing.
@@ -30,6 +31,7 @@
 - **Always your click.** The plugin never places a marker by itself.
 - **PvP.** Sharing pauses in the Wilderness and on PvP worlds. Your markers stay on your own screen.
 - **Limits.** Up to 20 markers at once, each lasting 1 to 120 seconds.
+- **Settings.** Tile label, timer decimals, outline thickness, fade length, colour, fill, names and sharing are all in RuneLite's settings for the plugin.
 - **Privacy.** Only the marker's tile, number, colour and duration are sent, to your own party through RuneLite's party server. Nothing else leaves your computer.
 - **Something wrong?** Tell us in the 2hBuilds Discord.
 

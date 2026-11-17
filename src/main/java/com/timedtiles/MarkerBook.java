@@ -21,9 +21,6 @@ public final class MarkerBook
 	/** The most markers one owner has at once; one more removes the oldest. */
 	public static final int MAX_PER_OWNER = 20;
 
-	/** The longest fade, in milliseconds. */
-	private static final long FADE_MS = 2000;
-
 	/** The longest life a party member can give a marker of theirs, in seconds. */
 	private static final int MAX_SECONDS = 120;
 
@@ -179,10 +176,17 @@ public final class MarkerBook
 		return own;
 	}
 
-	/** 1 until the fade starts, then straight down to 0 at expiry; the fade is the last 2 s (all of a shorter life). */
-	public static float alpha(Marker m, long nowMs)
+	/**
+	 * 1 until the fade starts, then straight down to 0 at expiry; the fade is the last {@code fadeMs} (all of a shorter
+	 * life). A fade of 0 stays solid until the marker is gone.
+	 */
+	public static float alpha(Marker m, long nowMs, long fadeMs)
 	{
-		final long fade = Math.min(FADE_MS, m.getLifeMs());
+		if (fadeMs <= 0)
+		{
+			return nowMs < m.expiresAtMs() ? 1f : 0f;
+		}
+		final long fade = Math.min(fadeMs, m.getLifeMs());
 		if (fade <= 0)
 		{
 			return 0f;

@@ -119,13 +119,30 @@ public class MarkerBookTest
 	public void t8_theFadeIsTheLastTwoSecondsOrAllOfAShorterLife()
 	{
 		final Marker long15 = new Marker(0, null, 1, 1, 0, 1, GOLD, 0, 15_000);
-		assertEquals(1.0f, MarkerBook.alpha(long15, 13_000), 0.0001f);
-		assertEquals(0.5f, MarkerBook.alpha(long15, 14_000), 0.0001f);
-		assertEquals(0.0f, MarkerBook.alpha(long15, 15_000), 0.0001f);
-		assertEquals(1.0f, MarkerBook.alpha(long15, 0), 0.0001f);
-		assertEquals(0.0f, MarkerBook.alpha(long15, 16_000), 0.0001f);
+		assertEquals(1.0f, MarkerBook.alpha(long15, 13_000, 2_000), 0.0001f);
+		assertEquals(0.5f, MarkerBook.alpha(long15, 14_000, 2_000), 0.0001f);
+		assertEquals(0.0f, MarkerBook.alpha(long15, 15_000, 2_000), 0.0001f);
+		assertEquals(1.0f, MarkerBook.alpha(long15, 0, 2_000), 0.0001f);
+		assertEquals(0.0f, MarkerBook.alpha(long15, 16_000, 2_000), 0.0001f);
 		final Marker short1 = new Marker(0, null, 1, 1, 0, 1, GOLD, 0, 1_000);
-		assertEquals(0.5f, MarkerBook.alpha(short1, 500), 0.0001f);
+		assertEquals(0.5f, MarkerBook.alpha(short1, 500, 2_000), 0.0001f);
+	}
+
+	@Test
+	public void t8b_theFadeLengthIsTheSettingCappedAtTheLifeAndZeroMeansSolid()
+	{
+		final Marker life15 = new Marker(0, null, 1, 1, 0, 1, GOLD, 0, 15_000);
+		assertEquals(1.0f, MarkerBook.alpha(life15, 9_999, 5_000), 0.0001f);
+		assertEquals(0.8f, MarkerBook.alpha(life15, 11_000, 5_000), 0.0001f);
+		assertEquals(0.2f, MarkerBook.alpha(life15, 14_000, 5_000), 0.0001f);
+		assertEquals(0.0f, MarkerBook.alpha(life15, 15_000, 5_000), 0.0001f);
+		assertEquals(1.0f, MarkerBook.alpha(life15, 14_999, 0), 0f);
+		assertEquals(1.0f, MarkerBook.alpha(life15, 0, 0), 0f);
+		assertEquals(0.0f, MarkerBook.alpha(life15, 15_000, 0), 0f);
+		assertEquals(0.0f, MarkerBook.alpha(life15, 20_000, 0), 0f);
+		assertEquals(1.0f, MarkerBook.alpha(life15, 14_999, -3_000), 0f);
+		final Marker short2 = new Marker(0, null, 1, 1, 0, 1, GOLD, 0, 2_000);
+		assertEquals(0.5f, MarkerBook.alpha(short2, 1_000, 5_000), 0.0001f);
 	}
 
 	@Test
