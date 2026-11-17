@@ -24,6 +24,19 @@ Every marker comes from your own click. The plugin never places one by itself.
   right-click menu does not open while the key is held. Turn it off in the settings to get the menu back.
 - **Logout and world hop** remove all markers.
 
+## What a marker looks like
+
+- **Tile label** picks what the tile shows: its **Number** (the default), the seconds it has left (**Timer**) or
+  **Nothing**, just the coloured tile. Nothing hides the placer's name too. A party member's markers count down their
+  own time, as they set it.
+- **Timer decimals** (0, 1 or 2) sets the timer's digits after the point. It rounds up, so it reads 1 until the marker
+  is gone and never 0 while it is still there: 3.84 seconds shows as 4, 3.9 or 3.84.
+- **Outline thickness** (1 to 6 pixels) and **Tile fill** (0 to 100 percent) set the outline and how filled the tile is.
+- **Fade length** (0 to 5 seconds) is how long a marker takes to fade out at the end of its time. 0 keeps it solid
+  until it vanishes.
+- **Large numbers** draws the number or the timer bigger. **Show names** adds a party member's name after theirs.
+- Your own markers are drawn in **My colour**; a party member's in their colour, swapped as described under Party.
+
 ## Party
 
 Make or join a party with RuneLite's own Party plugin. With "Share with my party" on, each marker you place, remove
