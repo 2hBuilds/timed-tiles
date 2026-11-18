@@ -13,13 +13,13 @@ Every marker comes from your own click. The plugin never places one by itself.
 - **Hold the Ping key and left-click the ground.** A marker goes on the tile under the mouse and your character does
   not walk. It works only when no right-click menu is open and the click would have been "Walk here", the same rule
   RuneLite's own Party ping follows. Without the key held, clicks work as normal.
-- **Numbers.** Your markers are numbered 1, 2, 3 in the order you click. Click a tile that already has one of your
-  markers to remove it; the others keep their numbers. Numbers keep counting up while you have any marker. Once none
+- **Numbers.** Your markers are numbered 1, 2, 3 in the order you click. Hold the Ping key and click a tile that already
+  has one of your markers to remove it; the others keep their numbers. Numbers keep counting up while you have any marker. Once none
   are left (removed, cleared or timed out) the next marker is 1 again.
 - **Time.** Each marker lasts "Markers last" seconds (1 to 120, default 10) and fades out over its last "Fade length"
   seconds (0 to 5, default 2; over its whole life if that is shorter; 0 keeps it solid until it vanishes).
 - **Limit.** At most 20 of your markers at once. A 21st removes your oldest.
-- **Clear key (optional).** A second way to remove all your markers, for your party too.
+- **Clear key (optional).** A second way to remove all your markers, from your party's screens too.
 - **Right-click clears (on by default).** Holding the Ping key and right-clicking removes all your markers, and the
   right-click menu does not open while the key is held. Turn it off in the settings to get the menu back.
 - **Logout and world hop** remove all markers.
@@ -44,7 +44,7 @@ or clear is sent through RuneLite's party server, and nowhere else. Party member
 markers with your number, for the duration you set. Each party member's markers are drawn in the colour they chose,
 so you can tell who placed what. If a colour looks the same as yours or as another member's (everyone on the default,
 say), the plugin shows that member in a clearly different colour on your screen, and switches to their real colour as
-soon as it no longer clashes. Turn on "Show names" to also write the placer's name next to the number. Members without
+soon as it no longer clashes. Turn on "Show names" to also write the placer's name next to the number or timer. Members without
 the plugin see nothing.
 
 - Sharing pauses in the Wilderness and on PvP worlds (Deadman, PvP, bounty, high risk, Last Man Standing and PvP
