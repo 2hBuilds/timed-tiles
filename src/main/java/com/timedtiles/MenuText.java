@@ -7,13 +7,13 @@ import java.net.URL;
  * a Swing label showing each choice's {@code toString()}, and a Swing label draws HTML, so the picture is an
  * {@code <img>} of the plugin's own resource. When the picture cannot be found, the plain text is used.
  *
- * <p>The pictures are 60 x 40, the size a marker is in game, drawn by {@link MarkerPainter} (docs/menu-icons/RealIcons.java.txt in the private repository).
+ * <p>The pictures are 48 x 32, a marker at game scale, drawn by {@link MarkerPainter} (docs/menu-icons/RealIcons.java.txt in the private repository).
  * The opened list's rows grow to fit them; the closed box stays 22 px tall and shows the middle of the picture.
  */
 final class MenuText
 {
-	static final int WIDTH = 60;
-	static final int HEIGHT = 40;
+	static final int WIDTH = 48;
+	static final int HEIGHT = 32;
 
 	private MenuText()
 	{

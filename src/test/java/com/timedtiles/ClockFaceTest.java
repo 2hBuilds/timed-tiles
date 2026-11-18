@@ -130,7 +130,7 @@ public class ClockFaceTest
 			final java.awt.image.BufferedImage image = javax.imageio.ImageIO.read(url);
 			assertEquals(name, MenuText.WIDTH, image.getWidth());
 			assertEquals(name, MenuText.HEIGHT, image.getHeight());
-			assertTrue(t.toString(), t.toString().contains("width='60' height='40'"));
+			assertTrue(t.toString(), t.toString().contains("width='" + MenuText.WIDTH + "' height='" + MenuText.HEIGHT + "'"));
 		}
 	}
 
