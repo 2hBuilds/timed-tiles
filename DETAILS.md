@@ -4,7 +4,8 @@
 > Plugin Hub (the repository's README).
 
 Hold a key, left-click the ground, and a numbered marker appears on that tile. It fades out after a set time.
-Inside a RuneLite party, party members who also have 2h Timed Tiles see your markers too.
+Inside a RuneLite party, party members who also have 2h Timed Tiles see your markers too. It works on your own as well:
+a party only adds sharing.
 
 Every marker comes from your own click. The plugin never places one by itself.
 
@@ -13,11 +14,11 @@ Every marker comes from your own click. The plugin never places one by itself.
 - **Hold the Ping key and left-click the ground.** A marker goes on the tile under the mouse and your character does
   not walk. It works only when no right-click menu is open and the click would have been "Walk here", the same rule
   RuneLite's own Party ping follows. Without the key held, clicks work as normal.
-- **Numbers.** Your markers are numbered 1, 2, 3 in the order you click. Hold the Ping key and click a tile that already
-  has one of your markers to remove it; the others keep their numbers. Numbers keep counting up while you have any marker. Once none
-  are left (removed, cleared or timed out) the next marker is 1 again.
-- **Time.** Each marker lasts "Markers last" seconds (1 to 120, default 10) and fades out over its last "Fade length"
-  seconds (0 to 5, default 2; over its whole life if that is shorter; 0 keeps it solid until it vanishes).
+- **Numbers.** Your markers are numbered 1, 2, 3 in the order you click. Hold the Ping key and click a tile that
+  already has one of your markers to remove it; the others keep their numbers. Numbers keep counting up while you have
+  any marker. Once none are left (removed, cleared or timed out) the next marker is 1 again.
+- **Time.** Each marker lasts "Markers last" seconds (1 to 120, default 10), then it is gone. It fades out over its
+  last "Fade length" seconds (see below).
 - **Limit.** At most 20 of your markers at once. A 21st removes your oldest.
 - **Clear key (optional).** A second way to remove all your markers, from your party's screens too.
 - **Right-click clears (on by default).** Holding the Ping key and right-clicking removes all your markers, and the
@@ -32,10 +33,12 @@ Every marker comes from your own click. The plugin never places one by itself.
 - **Timer decimals** (0, 1 or 2) sets the timer's digits after the point. It rounds up, so it reads 1 until the marker
   is gone and never 0 while it is still there: 3.84 seconds shows as 4, 3.9 or 3.84.
 - **Outline thickness** (1 to 6 pixels) and **Tile fill** (0 to 100 percent) set the outline and how filled the tile is.
-- **Fade length** (0 to 5 seconds) is how long a marker takes to fade out at the end of its time. 0 keeps it solid
-  until it vanishes.
+- **Fade length** (0 to 5 seconds, default 2) is how long a marker takes to fade out at the end of its time. A marker
+  that lasts less than that fades over its whole life. 0 keeps it solid until it vanishes.
 - **Large numbers** draws the number or the timer bigger. **Show names** adds a party member's name after theirs.
 - Your own markers are drawn in **My colour**; a party member's in their colour, swapped as described under Party.
+- How a marker looks is each player's own choice. Only the tile, number, colour and time are shared, so you and a party
+  member can each show the same marker as a number, a timer or nothing.
 
 ## Party
 
@@ -44,9 +47,11 @@ or clear is sent through RuneLite's party server, and nowhere else. Party member
 markers with your number, for the duration you set. Each party member's markers are drawn in the colour they chose,
 so you can tell who placed what. If a colour looks the same as yours or as another member's (everyone on the default,
 say), the plugin shows that member in a clearly different colour on your screen, and switches to their real colour as
-soon as it no longer clashes. Turn on "Show names" to also write the placer's name next to the number or timer. Members without
-the plugin see nothing.
+soon as it no longer clashes. Turn on "Show names" to also write the placer's name next to the number or timer.
+Members without the plugin see nothing.
 
+- **Show party markers** off hides your party's markers at once. It does not stop yours from being shared; that is
+  "Share with my party".
 - Sharing pauses in the Wilderness and on PvP worlds (Deadman, PvP, bounty, high risk, Last Man Standing and PvP
   arena). Your markers then stay on your own screen only.
 - A party member's markers go when they leave the party. All party markers go when you leave or change party.
