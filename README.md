@@ -12,7 +12,7 @@
 ## What it does
 
 - **Numbered markers.** Hold your Ping key and left-click the ground. A marker goes on that tile, numbered 1, 2, 3 in the order you click, and your character does not walk.
-- **They disappear.** Each marker fades out after the time you set, 15 seconds by default.
+- **They disappear.** Each marker fades out after the time you set, 10 seconds by default.
 - **Make it yours.** Choose what each tile shows: its number, a countdown of the seconds it has left (whole seconds, tenths or hundredths), or nothing. You can also set your colour, how thick the outline is, how filled the tile is and how long the fade takes.
 - **Remove one.** Hold the Ping key and click a marked tile again. Just that marker goes and the others keep their numbers.
 - **Clear them all.** Hold the Ping key and right-click. A separate Clear key is optional.

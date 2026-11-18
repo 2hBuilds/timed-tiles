@@ -16,7 +16,7 @@ Every marker comes from your own click. The plugin never places one by itself.
 - **Numbers.** Your markers are numbered 1, 2, 3 in the order you click. Click a tile that already has one of your
   markers to remove it; the others keep their numbers. Numbers keep counting up while you have any marker. Once none
   are left (removed, cleared or timed out) the next marker is 1 again.
-- **Time.** Each marker lasts "Markers last" seconds (1 to 120, default 15) and fades out over its last "Fade length"
+- **Time.** Each marker lasts "Markers last" seconds (1 to 120, default 10) and fades out over its last "Fade length"
   seconds (0 to 5, default 2; over its whole life if that is shorter; 0 keeps it solid until it vanishes).
 - **Limit.** At most 20 of your markers at once. A 21st removes your oldest.
 - **Clear key (optional).** A second way to remove all your markers, for your party too.
@@ -60,9 +60,9 @@ the plugin see nothing.
 | Ping key | not set | Hold it and left-click the ground to place a numbered marker. Pick a key RuneLite's Party ping does not use. |
 | Clear key | not set | Removes all your markers. |
 | Right-click clears | on | Hold the Ping key and right-click to remove all your markers. The menu does not open while you do. |
-| Markers last | 15 seconds | How long each of your markers stays (1 to 120). |
+| Markers last | 10 seconds | How long each of your markers stays (1 to 120). |
 | My colour | orange-gold | The colour of your markers. Your party sees it too, unless it looks the same as theirs. |
-| Tile fill | 20% | How much each marker's tile is filled in. 0 draws just the outline. |
+| Tile fill | 6% | How much each marker's tile is filled in. 0 draws just the outline. |
 | Tile label | Number | What each marker's tile shows: its Number, the seconds it has left (Timer) or Nothing. |
 | Timer decimals | 0 | Digits after the point when Tile label is Timer: 0 whole seconds, 1 tenths, 2 hundredths. The timer rounds up, so it never reads zero while the marker is still there. |
 | Outline thickness | 2 px | How thick each marker's tile outline is (1 to 6). |

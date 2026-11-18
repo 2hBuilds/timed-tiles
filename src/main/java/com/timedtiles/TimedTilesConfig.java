@@ -61,7 +61,7 @@ public interface TimedTilesConfig extends Config
 	@Units(Units.SECONDS)
 	default int lifeSeconds()
 	{
-		return 15;
+		return 10;
 	}
 
 	@ConfigItem(
@@ -85,7 +85,7 @@ public interface TimedTilesConfig extends Config
 	@Units(Units.PERCENT)
 	default int tileFill()
 	{
-		return 20;
+		return 6;
 	}
 
 	@ConfigItem(
