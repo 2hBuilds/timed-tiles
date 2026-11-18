@@ -13,7 +13,7 @@
 
 - **Numbered markers.** Hold your Ping key and left-click the ground. A marker goes on that tile, numbered 1, 2, 3 in the order you click, and your character does not walk. Up to 20 at once.
 - **They disappear.** Each marker fades out after the time you set, from 1 to 120 seconds (10 by default).
-- **Number, countdown or nothing.** Choose what each tile shows: its number, the seconds it has left (whole seconds, tenths or hundredths), or just the coloured tile.
+- **Number, timer, clock or nothing.** Choose what each tile shows from a menu with a picture of every choice: its number or the seconds it has left (whole seconds, tenths or hundredths), alone or with a clock of the time it has left (a pie, a ring, the outline running down, a sweep or a corner pie), a clock alone, or just the coloured tile.
 - **Your look.** Set your colour, how thick the outline is, how filled the tile is and how long the fade takes.
 - **Party.** In a RuneLite party, party members who also have 2h Timed Tiles see your markers, each player in their own colour (the plugin steers clear of matching colours). Names are optional. Members without it see nothing.
 - **No party needed.** It works on your own too.
@@ -24,7 +24,7 @@
 2. **Place.** Hold the Ping key and left-click the ground.
 3. **Remove one.** Hold the Ping key and click a marked tile again. The other markers keep their numbers.
 4. **Clear all.** Hold the Ping key and right-click. You can also set a Clear key, or turn "Right-click clears" off in the settings.
-5. **Change the look.** In the same settings, "Tile label" picks the number, the timer or nothing.
+5. **Change the look.** In the same settings, open "Tile shows" and pick from the pictures.
 6. **Party.** Make a party with RuneLite's Party plugin. "Share with my party" is on by default.
 
 ## Good to know
@@ -40,7 +40,7 @@
 
 <br>
 
-<img width="235" src="images/settings.png" alt="The plugin's settings in RuneLite: ping key, clear key, right-click clears, markers last, colour, tile fill, tile label, timer decimals, outline thickness, fade length, large numbers, sharing and names">
+<img width="235" src="images/settings.png" alt="The plugin's settings in RuneLite: ping key, clear key, right-click clears, markers last, colour, tile fill, tile shows, timer decimals, outline thickness, fade length, large numbers, sharing and names">
 
 </td>
 </tr>

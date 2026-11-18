@@ -23,7 +23,7 @@ public final class LabelText
 	public static String of(TileLabel mode, int number, String who, boolean showNames, long remainingMs, int decimals)
 	{
 		final String main;
-		switch (mode == null ? TileLabel.NUMBER : mode)
+		switch ((mode == null ? TileLabel.NUMBER : mode).words())
 		{
 			case NUMBER:
 				main = Integer.toString(number);

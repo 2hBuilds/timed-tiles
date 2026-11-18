@@ -90,8 +90,8 @@ public interface TimedTilesConfig extends Config
 
 	@ConfigItem(
 		keyName = "tileLabel",
-		name = "Tile label",
-		description = "What each marker's tile shows: its number, the seconds it has left, or nothing.",
+		name = "Tile shows",
+		description = "What each marker's tile shows: its number or the seconds it has left, alone or with a clock of the time it has left (a pie, a ring, the outline running down, a sweep or a corner pie), a clock alone, or nothing.",
 		position = 7
 	)
 	default TileLabel tileLabel()
@@ -102,7 +102,7 @@ public interface TimedTilesConfig extends Config
 	@ConfigItem(
 		keyName = "timerDecimals",
 		name = "Timer decimals",
-		description = "Digits after the point when Tile label is Timer: 0 shows whole seconds, 1 tenths, 2 hundredths.",
+		description = "Digits after the point when the tile shows a timer: 0 shows whole seconds, 1 tenths, 2 hundredths.",
 		position = 8
 	)
 	@Range(min = 0, max = 2)
@@ -173,7 +173,7 @@ public interface TimedTilesConfig extends Config
 	@ConfigItem(
 		keyName = "showNames",
 		name = "Show names",
-		description = "Shows who placed each party marker, after the number or timer. Nothing is shown when Tile label is Nothing.",
+		description = "Shows who placed each party marker, after the number or timer. No name is shown when the tile shows no number or timer.",
 		position = 14
 	)
 	default boolean showNames()

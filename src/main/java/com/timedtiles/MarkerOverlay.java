@@ -24,8 +24,9 @@ import net.runelite.client.ui.overlay.OverlayUtil;
 
 /**
  * Draws the markers: a tile outline in the marker's colour ("Outline thickness") with a fill of "Tile fill" percent,
- * fading out over "Fade length" at the end of its life, with what "Tile label" says over it - its number, its seconds
- * left or nothing - and the placer's name for a party marker when "Show names" is on. Runs on the client thread.
+ * fading out over "Fade length" at the end of its life, with the clock "Tile shows" picks showing the share of its time
+ * left, and the words it picks over it - its number, its seconds left or nothing - and the placer's name for a party
+ * marker when "Show names" is on. Runs on the client thread.
  */
 public class MarkerOverlay extends Overlay
 {
@@ -111,10 +112,10 @@ public class MarkerOverlay extends Overlay
 		{
 			return;
 		}
-		final Color outline = withAlpha(m.getRgb(), a * 255);
-		final Color fill = withAlpha(m.getRgb(), a * 255 * config.tileFill() / 100f);
-		OverlayUtil.renderPolygon(g, poly, outline, fill, border);
-		final String label = LabelText.of(config.tileLabel(), m.getNumber(), m.getWho(), config.showNames(),
+		final TileLabel shows = config.tileLabel();
+		MarkerPainter.tile(g, poly, m.getRgb(), a, config.tileFill(), border, borderWidth,
+			shows == null ? ClockStyle.OFF : shows.clock(), ClockFace.timeLeft(m.expiresAtMs() - now, m.getLifeMs()));
+		final String label = LabelText.of(shows, m.getNumber(), m.getWho(), config.showNames(),
 			m.expiresAtMs() - now, config.timerDecimals());
 		if (label == null)
 		{
@@ -123,13 +124,8 @@ public class MarkerOverlay extends Overlay
 		final Point at = Perspective.getCanvasTextLocation(client, g, lp, label, 0);
 		if (at != null)
 		{
-			// Drawn here and not by OverlayUtil.renderTextLocation, whose black shadow would not fade with the marker.
-			final int tx = at.getX();
-			final int ty = at.getY() - stacked * STACK_STEP_PX;
-			g.setColor(new Color(0, 0, 0, outline.getAlpha()));
-			g.drawString(label, tx + 1, ty + 1);
-			g.setColor(outline);
-			g.drawString(label, tx, ty);
+			// Drawn by the painter and not by OverlayUtil.renderTextLocation, whose shadow would not fade with the marker.
+			MarkerPainter.label(g, label, at.getX(), at.getY() - stacked * STACK_STEP_PX, m.getRgb(), a);
 		}
 	}
 
@@ -160,9 +156,4 @@ public class MarkerOverlay extends Overlay
 		}
 	}
 
-	private static Color withAlpha(int rgb, float alpha)
-	{
-		return new Color((rgb >> 16) & 0xFF, (rgb >> 8) & 0xFF, rgb & 0xFF,
-			Math.max(0, Math.min(255, Math.round(alpha))));
-	}
 }

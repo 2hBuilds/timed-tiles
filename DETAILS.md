@@ -27,9 +27,14 @@ Every marker comes from your own click. The plugin never places one by itself.
 
 ## What a marker looks like
 
-- **Tile label** picks what the tile shows: its **Number** (the default), the seconds it has left (**Timer**) or
-  **Nothing**, just the coloured tile. Nothing hides the placer's name too. A party member's markers count down their
-  own time, as they set it.
+- **Tile shows** is one menu of 16 choices, each with a small picture of it. A marker can show its **Number** (the
+  default) or the seconds it has left (**Timer**), alone or with a clock of how much of its time is left; a clock
+  alone; or **Nothing**, just the coloured tile. The clocks: a **pie** in the middle that empties, a **ring** that
+  runs down, the tile's own **border** running down, a **sweep** that wipes round the tile, or a small pie in the
+  **corner**. The choices, in menu order: Number, Number + pie, Number + ring, Number + border, Number + sweep,
+  Number + corner, Timer, Timer + ring, Timer + border, Timer + sweep, Timer + corner, Nothing, Pie, Ring, Border,
+  Sweep. With no number or timer, the placer's name is hidden too. A party member's markers count down and run
+  their clocks on their own time, as they set it.
 - **Timer decimals** (0, 1 or 2) sets the timer's digits after the point. It rounds up, so it reads 1 until the marker
   is gone and never 0 while it is still there: 3.84 seconds shows as 4, 3.9 or 3.84.
 - **Outline thickness** (1 to 6 pixels) and **Tile fill** (0 to 100 percent) set the outline and how filled the tile is.
@@ -38,7 +43,7 @@ Every marker comes from your own click. The plugin never places one by itself.
 - **Large numbers** draws the number or the timer bigger. **Show names** adds a party member's name after theirs.
 - Your own markers are drawn in **My colour**; a party member's in their colour, swapped as described under Party.
 - How a marker looks is each player's own choice. Only the tile, number, colour and time are shared, so you and a party
-  member can each show the same marker as a number, a timer or nothing.
+  member can each show the same marker their own way.
 
 ## Party
 
@@ -68,14 +73,14 @@ Members without the plugin see nothing.
 | Markers last | 10 seconds | How long each of your markers stays (1 to 120). |
 | My colour | orange-gold | The colour of your markers. Your party sees it too, unless it looks the same as theirs. |
 | Tile fill | 6% | How much each marker's tile is filled in. 0 draws just the outline. |
-| Tile label | Number | What each marker's tile shows: its Number, the seconds it has left (Timer) or Nothing. |
-| Timer decimals | 0 | Digits after the point when Tile label is Timer: 0 whole seconds, 1 tenths, 2 hundredths. The timer rounds up, so it never reads zero while the marker is still there. |
+| Tile shows | Number | What each marker's tile shows: its number or the seconds it has left, alone or with a clock of the time it has left (pie, ring, border, sweep or corner), a clock alone, or nothing. 16 choices, each with a picture. |
+| Timer decimals | 0 | Digits after the point when the tile shows a timer: 0 whole seconds, 1 tenths, 2 hundredths. The timer rounds up, so it never reads zero while the marker is still there. |
 | Outline thickness | 2 px | How thick each marker's tile outline is (1 to 6). |
 | Fade length | 2 seconds | How long a marker takes to fade out at the end of its time (0 to 5). 0 keeps it solid until it vanishes. |
 | Large numbers | off | Draws the numbers and the timer bigger. |
 | Share with my party | on | Party members with 2h Timed Tiles see your markers. Paused in the Wilderness and on PvP worlds. |
 | Show party markers | on | Shows markers from your party. |
-| Show names | off | Shows who placed each party marker, after the number or timer. Nothing is shown when Tile label is Nothing. |
+| Show names | off | Shows who placed each party marker, after the number or timer. No name is shown when the tile shows no number or timer. |
 
 Once per RuneLite run, at login, if the Ping key is not set, the chat shows one line: "2h Timed Tiles: choose a ping
 key in its settings."
