@@ -40,7 +40,7 @@
 
 <br>
 
-<img width="235" src="images/settings.png" alt="The plugin's settings in RuneLite: ping key, clear key, right-click clears, markers last, colour, tile fill, large numbers, sharing and names">
+<img width="235" src="images/settings.png" alt="The plugin's settings in RuneLite: ping key, clear key, right-click clears, markers last, colour, tile fill, tile label, timer decimals, outline thickness, fade length, large numbers, sharing and names">
 
 </td>
 </tr>
