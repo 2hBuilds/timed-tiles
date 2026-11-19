@@ -32,6 +32,15 @@ public final class MarkerBook
 
 	private int counter;
 
+	/** The sample marker shown after a look setting changes, or null. Never shared, never numbered with the player's. */
+	private Marker preview;
+
+	/** Shows a sample marker numbered 1 on a tile, in place of any earlier one, so the player sees a new look at once. */
+	public void showPreview(int x, int y, int plane, int rgb, long nowMs, long lifeMs)
+	{
+		preview = new Marker(0, null, x, y, plane, 1, rgb & 0xFFFFFF, nowMs, lifeMs);
+	}
+
 	/**
 	 * The player clicked a tile: remove their marker there, or add one with the next number.
 	 */
@@ -66,6 +75,7 @@ public final class MarkerBook
 	{
 		final boolean any = !mine.isEmpty();
 		mine.clear();
+		preview = null;
 		return any;
 	}
 
@@ -141,6 +151,7 @@ public final class MarkerBook
 	{
 		mine.clear();
 		party.clear();
+		preview = null;
 		counter = 0;
 	}
 
@@ -149,9 +160,16 @@ public final class MarkerBook
 	{
 		mine.removeIf(m -> nowMs >= m.expiresAtMs());
 		party.removeIf(m -> nowMs >= m.expiresAtMs());
+		if (preview != null && nowMs >= preview.expiresAtMs())
+		{
+			preview = null;
+		}
 	}
 
-	/** The unexpired markers on a plane: the player's by number, then the party's by creation time. */
+	/**
+	 * The unexpired markers on a plane: the player's by number, then the party's by creation time, then the sample
+	 * marker.
+	 */
 	public List<Marker> visible(int plane, long nowMs)
 	{
 		final List<Marker> own = new ArrayList<>();
@@ -173,6 +191,10 @@ public final class MarkerBook
 		}
 		others.sort(Comparator.comparingLong(Marker::getCreatedMs));
 		own.addAll(others);
+		if (preview != null && preview.getPlane() == plane && nowMs < preview.expiresAtMs())
+		{
+			own.add(preview);
+		}
 		return own;
 	}
 

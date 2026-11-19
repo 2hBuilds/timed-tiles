@@ -39,16 +39,17 @@ public final class MarkerPainter
 	 * @param fillPercent "Tile fill", 0 to 100
 	 * @param border      the outline stroke, {@code borderWidth} pixels wide
 	 * @param left        the share of its time the marker has left, 0 to 1
+	 * @param clockRgb    the clock's colour: the marker's, or the one "Timer & number" picks
 	 */
 	public static void tile(Graphics2D g, Polygon poly, int rgb, float a, int fillPercent, Stroke border,
-		int borderWidth, ClockStyle clock, float left)
+		int borderWidth, ClockStyle clock, float left, int clockRgb)
 	{
 		final Color fill = withAlpha(rgb, a * 255 * fillPercent / 100f);
 		final Color outline = withAlpha(rgb, a * 255 * (clock == ClockStyle.BORDER ? FAINT : 1f));
 		OverlayUtil.renderPolygon(g, poly, outline, fill, border);
 		if (clock != null && clock != ClockStyle.OFF)
 		{
-			clock(g, poly, clock, left, rgb, a, borderWidth);
+			clock(g, poly, clock, left, clockRgb, a, borderWidth);
 		}
 	}
 

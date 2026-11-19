@@ -33,4 +33,29 @@ final class MenuText
 		return "<html><img src='" + url + "' width='" + WIDTH + "' height='" + HEIGHT + "' align='middle'>&nbsp;" + text
 			+ "</html>";
 	}
+
+	/** The colour squares' size. */
+	static final int SQUARE = 12;
+
+	/**
+	 * A choice with a {@value #SQUARE} px square in front: a table cell of {@code rgb} holding the picture {@code icon}
+	 * (a grey frame with a clear middle), or the picture alone when {@code rgb} is negative. A table keeps every square
+	 * the same size and level with the words in any font; a coloured run of spaces would take the font's width, which
+	 * in the RuneScape font is a thin bar.
+	 */
+	static String withSquare(int rgb, String icon, String text)
+	{
+		final URL url = MenuText.class.getResource("menu/" + icon + ".png");
+		if (url == null)
+		{
+			return text;
+		}
+		final String cell = rgb < 0
+			? "<td valign='middle'>"
+			: String.format("<td valign='middle' bgcolor='#%06X'>", rgb & 0xFFFFFF);
+		return "<html><table cellspacing='0' cellpadding='0'><tr><td valign='middle'>"
+			+ "<table cellspacing='0' cellpadding='0'><tr>" + cell + "<img src='" + url + "' width='" + SQUARE
+			+ "' height='" + SQUARE + "'></td></tr></table></td><td valign='middle'>&nbsp;" + text
+			+ "</td></tr></table></html>";
+	}
 }

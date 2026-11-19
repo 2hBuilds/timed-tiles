@@ -135,8 +135,67 @@ public class ClockFaceTest
 	}
 
 	@Test
+	public void theTimerAndNumberChoicesEndWithCustomAndEachHasItsSquare() throws Exception
+	{
+		final String[] texts = {"Marker colour", "White", "Black", "Yellow", "Cyan", "Green", "Pink", "Custom"};
+		final NumberColour[] all = NumberColour.values();
+		assertEquals(texts.length, all.length);
+		assertEquals(NumberColour.CUSTOM, all[all.length - 1]);
+		for (String picture : new String[]{NumberColour.FRAME, NumberColour.MARKER_PICTURE})
+		{
+			final java.net.URL url = NumberColour.class.getResource("menu/" + picture + ".png");
+			assertTrue("missing " + picture, url != null);
+			final java.awt.image.BufferedImage image = javax.imageio.ImageIO.read(url);
+			assertEquals(picture, MenuText.SQUARE, image.getWidth());
+			assertEquals(picture, MenuText.SQUARE, image.getHeight());
+		}
+		for (int i = 0; i < all.length; i++)
+		{
+			final String menu = all[i].toString();
+			assertTrue(menu, menu.endsWith("&nbsp;" + texts[i] + "</td></tr></table></html>"));
+			assertTrue("every square is the same size", menu.contains("width='12' height='12'"));
+		}
+		assertTrue(NumberColour.MARKER.toString().contains(NumberColour.MARKER_PICTURE));
+		assertTrue(NumberColour.WHITE.toString().contains("bgcolor='#FFFFFF'"));
+		assertTrue(NumberColour.PINK.toString().contains("bgcolor='#FF69B4'"));
+	}
+
+	@Test
+	public void customsSquareShowsTheCurrentCustomColour()
+	{
+		try
+		{
+			NumberColour.showCustom(new java.awt.Color(0x12, 0xAB, 0xEF));
+			assertTrue(NumberColour.CUSTOM.toString(), NumberColour.CUSTOM.toString().contains("bgcolor='#12ABEF'"));
+			assertTrue(NumberColour.CUSTOM.toString().contains(NumberColour.FRAME));
+			NumberColour.showCustom(null);
+			assertTrue("null is ignored", NumberColour.CUSTOM.toString().contains("#12ABEF"));
+			NumberColour.showCustom(java.awt.Color.BLACK);
+			assertTrue(NumberColour.CUSTOM.toString().contains("bgcolor='#000000'"));
+		}
+		finally
+		{
+			NumberColour.showCustom(new java.awt.Color(0xB478FF));
+		}
+	}
+
+	@Test
+	public void theTimerAndNumberColourIsTheMarkersUnlessAnotherIsPicked()
+	{
+		final java.awt.Color purple = new java.awt.Color(180, 120, 255);
+		assertEquals(0x00FF00, NumberColour.of(NumberColour.MARKER, purple, 0x00FF00));
+		assertEquals(0xFFFFFF, NumberColour.of(NumberColour.WHITE, purple, 0x00FF00));
+		assertEquals(0x000000, NumberColour.of(NumberColour.BLACK, purple, 0x00FF00));
+		assertEquals(0xFF69B4, NumberColour.of(NumberColour.PINK, purple, 0x00FF00));
+		assertEquals(0xB478FF, NumberColour.of(NumberColour.CUSTOM, purple, 0x00FF00));
+		assertEquals("unread choice", 0x00FF00, NumberColour.of(null, purple, 0x00FF00));
+		assertEquals("custom with no colour", 0x00FF00, NumberColour.of(NumberColour.CUSTOM, null, 0x00FF00));
+	}
+
+	@Test
 	public void aMissingPictureFallsBackToThePlainName()
 	{
 		assertEquals("Ring", MenuText.with("no-such-picture", "Ring"));
+		assertEquals("Pink", MenuText.withSquare(0xFF69B4, "no-such-picture", "Pink"));
 	}
 }

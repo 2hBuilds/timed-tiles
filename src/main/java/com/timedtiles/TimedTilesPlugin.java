@@ -3,14 +3,18 @@ package com.timedtiles;
 import com.google.inject.Provides;
 import com.google.inject.name.Named;
 import java.awt.event.MouseEvent;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
 import javax.inject.Inject;
 import javax.swing.SwingUtilities;
 import net.runelite.api.ChatMessageType;
 import net.runelite.api.Client;
 import net.runelite.api.GameState;
 import net.runelite.api.MenuEntry;
+import net.runelite.api.Player;
 import net.runelite.api.Tile;
 import net.runelite.api.coords.WorldPoint;
 import net.runelite.api.events.FocusChanged;
@@ -52,6 +56,13 @@ public class TimedTilesPlugin extends Plugin
 	private static final Logger log = LoggerFactory.getLogger(TimedTilesPlugin.class);
 
 	static final String NO_KEY_LINE = "2h Timed Tiles: choose a ping key in its settings.";
+
+	/** The settings that change how a marker looks: changing one shows a sample marker under the player. */
+	private static final Set<String> PREVIEW_KEYS = new HashSet<>(Arrays.asList("fadeSeconds", "myColour",
+		"tileFill", "outlineWidth", "tileLabel", "numberColour", "customColour", "timerDecimals", "largeNumbers"));
+
+	/** How long the sample marker stays solid before its fade. */
+	private static final long PREVIEW_SOLID_MS = 5_000;
 
 	@Inject
 	private Client client;
@@ -175,6 +186,7 @@ public class TimedTilesPlugin extends Plugin
 		keyManager.registerKeyListener(clearListener);
 		mouseManager.registerMouseListener(rightClickListener);
 		wsClient.registerMessage(TimedTilesMessage.class);
+		NumberColour.showCustom(config.customColour());
 		log.info("2h Timed Tiles {} started", Version.CURRENT);
 	}
 
@@ -354,10 +366,37 @@ public class TimedTilesPlugin extends Plugin
 	@Subscribe
 	public void onConfigChanged(ConfigChanged e)
 	{
-		if (TimedTilesConfig.GROUP.equals(e.getGroup()) && "showParty".equals(e.getKey())
-			&& !config.showParty())
+		if (!TimedTilesConfig.GROUP.equals(e.getGroup()))
+		{
+			return;
+		}
+		if ("showParty".equals(e.getKey()) && !config.showParty())
 		{
 			clientThread.invoke(this::dropParty);
 		}
+		if ("customColour".equals(e.getKey()))
+		{
+			NumberColour.showCustom(config.customColour());
+		}
+		if (PREVIEW_KEYS.contains(e.getKey()))
+		{
+			clientThread.invoke(this::showPreview);
+		}
+	}
+
+	/**
+	 * A sample marker under the player for a few seconds, then its fade, in the new look. On this screen only: it is
+	 * never sent to the party. Client thread.
+	 */
+	private void showPreview()
+	{
+		final Player me = client.getLocalPlayer();
+		if (client.getGameState() != GameState.LOGGED_IN || me == null)
+		{
+			return;
+		}
+		final WorldPoint at = me.getWorldLocation();
+		book.showPreview(at.getX(), at.getY(), at.getPlane(), config.myColour().getRGB() & 0xFFFFFF,
+			System.currentTimeMillis(), PREVIEW_SOLID_MS + Math.max(0, config.fadeSeconds()) * 1000L);
 	}
 }

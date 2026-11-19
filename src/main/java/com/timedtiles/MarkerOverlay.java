@@ -24,9 +24,10 @@ import net.runelite.client.ui.overlay.OverlayUtil;
 
 /**
  * Draws the markers: a tile outline in the marker's colour ("Outline thickness") with a fill of "Tile fill" percent,
- * fading out over "Fade length" at the end of its life, with the clock "Tile shows" picks showing the share of its time
+ * fading out over "Fade time" at the end of its life, with the clock "Tile shows" picks showing the share of its time
  * left, and the words it picks over it - its number, its seconds left or nothing - and the placer's name for a party
- * marker when "Show names" is on. Runs on the client thread.
+ * marker when "Show names" is on. The clock and the words take the colour "Timer & number" picks (the marker's
+ * by default); the outline and fill always keep the marker's. Runs on the client thread.
  */
 public class MarkerOverlay extends Overlay
 {
@@ -113,8 +114,10 @@ public class MarkerOverlay extends Overlay
 			return;
 		}
 		final TileLabel shows = config.tileLabel();
+		final int detail = NumberColour.of(config.numberColour(), config.customColour(), m.getRgb());
 		MarkerPainter.tile(g, poly, m.getRgb(), a, config.tileFill(), border, borderWidth,
-			shows == null ? ClockStyle.OFF : shows.clock(), ClockFace.timeLeft(m.expiresAtMs() - now, m.getLifeMs()));
+			shows == null ? ClockStyle.OFF : shows.clock(), ClockFace.timeLeft(m.expiresAtMs() - now, m.getLifeMs()),
+			detail);
 		final String label = LabelText.of(shows, m.getNumber(), m.getWho(), config.showNames(),
 			m.expiresAtMs() - now, config.timerDecimals());
 		if (label == null)
@@ -125,7 +128,7 @@ public class MarkerOverlay extends Overlay
 		if (at != null)
 		{
 			// Drawn by the painter and not by OverlayUtil.renderTextLocation, whose shadow would not fade with the marker.
-			MarkerPainter.label(g, label, at.getX(), at.getY() - stacked * STACK_STEP_PX, m.getRgb(), a);
+			MarkerPainter.label(g, label, at.getX(), at.getY() - stacked * STACK_STEP_PX, detail, a);
 		}
 	}
 
