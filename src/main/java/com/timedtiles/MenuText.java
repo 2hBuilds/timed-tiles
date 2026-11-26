@@ -7,13 +7,14 @@ import java.net.URL;
  * a Swing label showing each choice's {@code toString()}, and a Swing label draws HTML, so the picture is an
  * {@code <img>} of the plugin's own resource. When the picture cannot be found, the plain text is used.
  *
- * <p>The pictures are 48 x 32, a marker at game scale, drawn by {@link MarkerPainter} (docs/menu-icons/RealIcons.java.txt in the private repository).
- * The opened list's rows grow to fit them; the closed box stays 22 px tall and shows the middle of the picture.
+ * <p>The pictures are 36 x 24, a marker at game scale, drawn by {@link MarkerPainter} (docs/menu-icons/RealIcons.java.txt in the private repository).
+ * The opened list's rows grow to fit them; the closed box stays 22 px tall and shows the middle of the picture. At
+ * 48 x 32 (1.1.0) the dropdown was so wide that RuneLite cut the setting's name to "Tile...".
  */
 final class MenuText
 {
-	static final int WIDTH = 48;
-	static final int HEIGHT = 32;
+	static final int WIDTH = 36;
+	static final int HEIGHT = 24;
 
 	private MenuText()
 	{
@@ -30,8 +31,10 @@ final class MenuText
 		{
 			return text;
 		}
-		return "<html><img src='" + url + "' width='" + WIDTH + "' height='" + HEIGHT + "' align='middle'>&nbsp;" + text
-			+ "</html>";
+		// A table, not <img align='middle'>: Swing's HTML lines the words up with the picture's middle by their
+		// baseline, so they sat high; two cells with valign='middle' centre the words on the picture.
+		return "<html><table cellspacing='0' cellpadding='0'><tr><td valign='middle'><img src='" + url + "' width='"
+			+ WIDTH + "' height='" + HEIGHT + "'></td><td valign='middle'>&nbsp;" + text + "</td></tr></table></html>";
 	}
 
 	/** The colour squares' size. */

@@ -12,6 +12,7 @@
 ## What it does
 
 - **Numbered markers.** Hold your Ping key and left-click the ground. A marker goes on that tile, numbered 1, 2, 3 in the order you click, and your character does not walk. Up to 20 at once.
+- **Mouse side buttons.** Set "Mouse back button" and "Mouse forward button" to Marks or Clears: a tap marks the tile under the mouse, or clears all your markers, with no key or click.
 - **They disappear.** Each marker fades out after the time you set, from 1 to 120 seconds (10 by default).
 - **Number, timer, clock or nothing.** Choose what each tile shows from a menu with a picture of every choice: its number or the seconds it has left (whole seconds, tenths or hundredths), alone or with a clock of the time it has left (a pie, a ring, the outline running down, a sweep or a corner pie), a clock alone, or just the coloured tile.
 - **Your look.** Set your colour, how thick the outline is, how filled the tile is and how long the fade takes. Use "Timer & number" to draw every timer, number and clock in one colour (or your own Custom colour), easier to read on a busy floor. Changing a look setting shows a sample marker under you for a few seconds.
@@ -24,7 +25,7 @@
 2. **Place.** Hold the Ping key and left-click the ground.
 3. **Remove one.** Hold the Ping key and click a marked tile again. The other markers keep their numbers.
 4. **Clear all.** Hold the Ping key and right-click. You can also set a Clear key, or turn "Right-click clears" off in the settings.
-5. **Change the look.** In the same settings, open "Tile shows" and pick from the pictures.
+5. **Change the look.** In the same settings, open "Tile" and pick from the pictures.
 6. **Party.** Make a party with RuneLite's Party plugin. "Share with party" is on by default.
 
 ## Good to know

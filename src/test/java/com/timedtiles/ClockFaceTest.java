@@ -92,7 +92,9 @@ public class ClockFaceTest
 		for (int i = 0; i < label.length; i++)
 		{
 			final String menu = TileLabel.values()[i].toString();
-			assertTrue(menu, menu.startsWith("<html><img src='") && menu.endsWith("&nbsp;" + label[i] + "</html>"));
+			// The picture and the words in two cells centred top to bottom, so the words sit level with the picture.
+			assertTrue(menu, menu.startsWith("<html><table") && menu.contains("<td valign='middle'><img src='")
+				&& menu.endsWith("<td valign='middle'>&nbsp;" + label[i] + "</td></tr></table></html>"));
 		}
 	}
 

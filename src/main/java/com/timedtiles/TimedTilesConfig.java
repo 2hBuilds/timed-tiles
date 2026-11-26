@@ -78,10 +78,34 @@ public interface TimedTilesConfig extends Config
 	}
 
 	@ConfigItem(
+		keyName = "backButton",
+		name = "Mouse back button",
+		description = "What a tap of the mouse's back button does. Using either side button gives both to this plugin.",
+		position = 4,
+		section = PLACING
+	)
+	default ButtonUse backButton()
+	{
+		return ButtonUse.NOTHING;
+	}
+
+	@ConfigItem(
+		keyName = "forwardButton",
+		name = "Mouse forward button",
+		description = "What a tap of the mouse's forward button does. Using either side button gives both to this plugin.",
+		position = 5,
+		section = PLACING
+	)
+	default ButtonUse forwardButton()
+	{
+		return ButtonUse.NOTHING;
+	}
+
+	@ConfigItem(
 		keyName = "lifeSeconds",
 		name = "Markers last",
 		description = "How long each marker stays.",
-		position = 4,
+		position = 6,
 		section = PLACING
 	)
 	@Range(min = 1, max = 120)
@@ -95,7 +119,7 @@ public interface TimedTilesConfig extends Config
 		keyName = "fadeSeconds",
 		name = "Fade time",
 		description = "How long the fade-out takes. 0 = no fade.",
-		position = 5,
+		position = 7,
 		section = PLACING
 	)
 	@Range(min = 0, max = 5)
@@ -147,7 +171,7 @@ public interface TimedTilesConfig extends Config
 
 	@ConfigItem(
 		keyName = "tileLabel",
-		name = "Tile shows",
+		name = "Tile",
 		description = "What each marker shows. Every choice has a picture.",
 		position = 14,
 		section = LOOK

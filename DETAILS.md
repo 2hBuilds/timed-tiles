@@ -7,7 +7,7 @@ Hold a key, left-click the ground, and a numbered marker appears on that tile. I
 Inside a RuneLite party, party members who also have 2h Timed Tiles see your markers too. It works on your own as well:
 a party only adds sharing.
 
-Every marker comes from your own click. The plugin never places one by itself.
+Every marker comes from your own click, or your own tap of a mouse side button. The plugin never places one by itself.
 
 ## Placing markers
 
@@ -23,11 +23,19 @@ Every marker comes from your own click. The plugin never places one by itself.
 - **Clear key (optional).** A second way to remove all your markers, from your party's screens too.
 - **Right-click clears (on by default).** Holding the Ping key and right-clicking removes all your markers, and the
   right-click menu does not open while the key is held. Turn it off in the settings to get the menu back.
+- **Mouse back button and Mouse forward button (both Nothing by default, since 1.2.0).** For mice with side
+  buttons. Set each to Nothing, Marks or Clears. A tap of a button set to Marks puts a marker on the tile under the
+  mouse, with no key and no click; a tap of one set to Clears removes all your markers. For example, back Marks and
+  forward Clears. A tap follows the same rule as a click: it marks only the ground where you could "Walk here", with
+  no menu open, and a tap on one of your markers removes it. RuneLite gives the side buttons to one plugin only, so
+  setting either one gives both to 2h Timed Tiles; if another plugin uses a side button, leave both on Nothing. Some
+  mice send their side buttons as keyboard keys, set in the mouse's own software; RuneLite does not see those as
+  side buttons.
 - **Logout and world hop** remove all markers.
 
 ## What a marker looks like
 
-- **Tile shows** is one menu of 16 choices, each with a small picture of it. A marker can show its **Number** (the
+- **Tile** (called "Tile shows" before 1.2.0) is one menu of 16 choices, each with a small picture of it. A marker can show its **Number** (the
   default) or the seconds it has left (**Timer**), alone or with a clock of how much of its time is left; a clock
   alone; or **Nothing**, just the coloured tile. The clocks: a **pie** in the middle that empties, a **ring** that
   runs down, the tile's own **border** running down, a **sweep** that wipes round the tile, or a small pie in the
@@ -80,13 +88,15 @@ The settings sit in three sections, all open: Placing markers, Look and Party (s
 | Ping key | not set | Hold it and left-click the ground to place a marker. Avoid your Party ping key. |
 | Clear key | not set | Removes all your markers. |
 | Right-click clears | on | Ping key + right-click removes all your markers (the menu does not open). |
+| Mouse back button | Nothing | What a tap of the mouse's back button does: Nothing, Marks (the tile under the mouse) or Clears (all yours). |
+| Mouse forward button | Nothing | The same for the forward button. Using either side button gives both to this plugin. |
 | Markers last | 10 seconds | How long each marker stays (1 to 120). |
 | Fade time | 2 seconds | How long the fade-out takes (0 to 5). 0 = no fade. |
 | **Look** | | |
 | Marker colour | orange-gold | Your markers' colour. Your party sees it too, unless it looks the same as theirs. |
 | Tile fill | 6% | How filled the tile is. 0 = outline only. |
 | Outline thickness | 2 px | How thick the tile outline is (1 to 6). |
-| Tile shows | Number | What each marker shows: number or timer, alone or with a clock, a clock alone, or nothing. 16 choices, each with a picture. |
+| Tile | Number | What each marker shows: number or timer, alone or with a clock, a clock alone, or nothing. 16 choices, each with a picture. |
 | Timer & number | Marker colour | Colour of the timer, number and clock: Marker colour, White, Black, Yellow, Cyan, Green, Pink or Custom. The outline and fill keep the marker's colour. |
 | Custom colour | purple | Used when Timer & number is Custom. |
 | Timer decimals | 0 | Digits after the point on the timer (0 to 2). It rounds up, so it never reads zero while the marker is there. |
@@ -96,7 +106,7 @@ The settings sit in three sections, all open: Placing markers, Look and Party (s
 | Show party markers | on | Shows your party's markers. |
 | Show names | off | Shows who placed each party marker. Hidden when the tile shows no number or timer. |
 
-Once per RuneLite run, at login, if the Ping key is not set, the chat shows one line: "2h Timed Tiles: choose a ping
+Once per RuneLite run, at login, if the Ping key is not set and both mouse buttons are on Nothing, the chat shows one line: "2h Timed Tiles: choose a ping
 key in its settings."
 
 ## Good to know

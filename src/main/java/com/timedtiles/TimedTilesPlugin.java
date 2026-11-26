@@ -43,7 +43,8 @@ import org.slf4j.LoggerFactory;
 
 /**
  * 2h Timed Tiles: hold the Ping key and left-click the ground to put a numbered marker on a tile; it fades out after
- * a set time and, in a RuneLite party, shows for party members who have this plugin. Every marker comes from a click.
+ * a set time and, in a RuneLite party, shows for party members who have this plugin. Every marker comes from a click,
+ * or from a tap of a mouse side button set to Marks.
  */
 @PluginDescriptor(
 	name = "2h Timed Tiles",
@@ -172,6 +173,62 @@ public class TimedTilesPlugin extends Plugin
 		}
 	};
 
+	/**
+	 * The mouse's side buttons, when "Mouse back button" or "Mouse forward button" is not Nothing: a tap marks the tile
+	 * under the mouse or clears all the player's markers. It goes FIRST in RuneLite's line of mouse listeners, because
+	 * RuneLite's "Block extra mouse buttons" (on by default) consumes a side-button press before the listeners and only
+	 * the first one still sees it. For the same reason it is in that line only while either button is in use, so that
+	 * it never takes the place of another plugin that wants the side buttons. Every other button passes untouched.
+	 */
+	private final MouseAdapter sideButtonListener = new MouseAdapter()
+	{
+		@Override
+		public MouseEvent mousePressed(MouseEvent e)
+		{
+			final ButtonUse use = useOf(e);
+			if (use == ButtonUse.MARKS)
+			{
+				e.consume();
+				clientThread.invoke(TimedTilesPlugin.this::markUnderMouse);
+			}
+			else if (use == ButtonUse.CLEARS)
+			{
+				e.consume();
+				clientThread.invoke(TimedTilesPlugin.this::clearMine);
+			}
+			return e;
+		}
+
+		@Override
+		public MouseEvent mouseReleased(MouseEvent e)
+		{
+			return swallowSideButton(e);
+		}
+
+		@Override
+		public MouseEvent mouseClicked(MouseEvent e)
+		{
+			return swallowSideButton(e);
+		}
+
+		private MouseEvent swallowSideButton(MouseEvent e)
+		{
+			if (useOf(e) != ButtonUse.NOTHING)
+			{
+				e.consume();
+			}
+			return e;
+		}
+
+		private ButtonUse useOf(MouseEvent e)
+		{
+			return ButtonUse.forPress(config.backButton(), config.forwardButton(), e.getButton());
+		}
+	};
+
+	/** Whether {@link #sideButtonListener} is in RuneLite's line now. */
+	private boolean sideButtonsListening;
+
 	@Provides
 	TimedTilesConfig provideConfig(ConfigManager configManager)
 	{
@@ -185,6 +242,7 @@ public class TimedTilesPlugin extends Plugin
 		keyManager.registerKeyListener(pingListener);
 		keyManager.registerKeyListener(clearListener);
 		mouseManager.registerMouseListener(rightClickListener);
+		updateSideButtons();
 		wsClient.registerMessage(TimedTilesMessage.class);
 		NumberColour.showCustom(config.customColour());
 		log.info("2h Timed Tiles {} started", Version.CURRENT);
@@ -194,6 +252,7 @@ public class TimedTilesPlugin extends Plugin
 	protected void shutDown()
 	{
 		wsClient.unregisterMessage(TimedTilesMessage.class);
+		stopSideButtons();
 		mouseManager.unregisterMouseListener(rightClickListener);
 		keyManager.unregisterKeyListener(clearListener);
 		keyManager.unregisterKeyListener(pingListener);
@@ -202,24 +261,75 @@ public class TimedTilesPlugin extends Plugin
 		clientThread.invoke(this::dropEverything);
 	}
 
+	/** Puts the side-button listener first in RuneLite's line while either side button is in use, else takes it out. */
+	private synchronized void updateSideButtons()
+	{
+		final boolean on = ButtonUse.anyInUse(config.backButton(), config.forwardButton());
+		if (on && !sideButtonsListening)
+		{
+			mouseManager.registerMouseListener(0, sideButtonListener);
+			sideButtonsListening = true;
+		}
+		else if (!on)
+		{
+			stopSideButtons();
+		}
+	}
+
+	private synchronized void stopSideButtons()
+	{
+		if (sideButtonsListening)
+		{
+			mouseManager.unregisterMouseListener(sideButtonListener);
+			sideButtonsListening = false;
+		}
+	}
+
 	@Subscribe
 	public void onMenuOptionClicked(MenuOptionClicked e)
 	{
-		boolean hasWalkHere = false;
-		for (MenuEntry entry : client.getMenuEntries())
-		{
-			if ("walk here".equalsIgnoreCase(entry.getOption()))
-			{
-				hasWalkHere = true;
-				break;
-			}
-		}
 		final Tile tile = client.getSelectedSceneTile();
-		if (!ClickRule.shouldPlace(pingKeyHeld, client.isMenuOpen(), hasWalkHere, tile != null))
+		if (!ClickRule.shouldPlace(pingKeyHeld, client.isMenuOpen(), hasWalkHere(), tile != null))
 		{
 			return;
 		}
 		e.consume();
+		place(tile);
+	}
+
+	/**
+	 * A side-button tap: marks the tile under the mouse (or removes the marker already on it), as a click with the
+	 * Ping key held would. Nothing happens over a menu, an interface or anything else with no "Walk here". Client thread.
+	 */
+	private void markUnderMouse()
+	{
+		if (client.getGameState() != GameState.LOGGED_IN)
+		{
+			return;
+		}
+		final Tile tile = client.getSelectedSceneTile();
+		if (ClickRule.shouldPlace(true, client.isMenuOpen(), hasWalkHere(), tile != null))
+		{
+			place(tile);
+		}
+	}
+
+	/** Whether the menu under the mouse has "Walk here", i.e. the mouse is on the ground of the scene. */
+	private boolean hasWalkHere()
+	{
+		for (MenuEntry entry : client.getMenuEntries())
+		{
+			if ("walk here".equalsIgnoreCase(entry.getOption()))
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+
+	/** Places the player's marker on {@code tile}, or removes the one there, and tells the party. Client thread. */
+	private void place(Tile tile)
+	{
 		final WorldPoint point = tile.getWorldLocation();
 		final int seconds = config.lifeSeconds();
 		final Change change = book.placeMine(point.getX(), point.getY(), point.getPlane(),
@@ -330,7 +440,8 @@ public class TimedTilesPlugin extends Plugin
 		{
 			dropEverything();
 		}
-		else if (state == GameState.LOGGED_IN && !warnedNoKey && Keybind.NOT_SET.equals(config.pingKey()))
+		else if (state == GameState.LOGGED_IN && !warnedNoKey && Keybind.NOT_SET.equals(config.pingKey())
+			&& !ButtonUse.anyInUse(config.backButton(), config.forwardButton()))
 		{
 			client.addChatMessage(ChatMessageType.CONSOLE, "", NO_KEY_LINE, null);
 			warnedNoKey = true;
@@ -377,6 +488,10 @@ public class TimedTilesPlugin extends Plugin
 		if ("customColour".equals(e.getKey()))
 		{
 			NumberColour.showCustom(config.customColour());
+		}
+		if ("backButton".equals(e.getKey()) || "forwardButton".equals(e.getKey()))
+		{
+			updateSideButtons();
 		}
 		if (PREVIEW_KEYS.contains(e.getKey()))
 		{
